@@ -90,12 +90,18 @@ st.write("✨ Welcome! I’m the Iron Lady Assistant. Ask me about our leadershi
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
+# Input box
 user_input = st.text_input("💬 Type your question:")
 
 if user_input:
     answer = get_answer(user_input)
     st.session_state.chat_history.append(("You", user_input))
     st.session_state.chat_history.append(("Bot", answer))
+
+# --- Clear Chat Button ---
+if st.button("🗑️ Clear Chat"):
+    st.session_state.chat_history = []
+    st.success("Chat cleared!")
 
 # --- Display styled chat history ---
 for sender, msg in st.session_state.chat_history:
