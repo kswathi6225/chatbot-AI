@@ -13,6 +13,17 @@ FAQS = {
 # --- Helper function ---
 def get_answer(user_input):
     user_input = user_input.lower()
+
+    # Greeting responses
+    greetings = ["hi", "hello", "hey", "good morning", "good evening"]
+    if any(greet in user_input for greet in greetings):
+        return random.choice([
+            "Hello 👋 I’m the Iron Lady Assistant! How can I help you today?",
+            "Hi there! 😊 Ask me about our leadership programs.",
+            "Hey! I can answer FAQs about Iron Lady’s programs, duration, mode, certificates, or mentors."
+        ])
+
+    # FAQ matching
     if "program" in user_input:
         return FAQS["programs"]
     elif "duration" in user_input:
@@ -23,12 +34,13 @@ def get_answer(user_input):
         return FAQS["certificate"]
     elif "mentor" in user_input or "coach" in user_input:
         return FAQS["mentors"]
-    else:
-        return random.choice([
-            "Hmm, I’m not sure about that. Can you rephrase?",
-            "Interesting question! Could you ask in another way?",
-            "I’ll get back to you on that—currently I can answer about programs, duration, mode, certificates, or mentors."
-        ])
+
+    # Fallback
+    return random.choice([
+        "Hmm 🤔 I’m not sure about that. Can you try asking about programs, duration, mode, certificates, or mentors?",
+        "Interesting question! Currently, I can answer FAQs about Iron Lady’s programs.",
+        "Could you ask me about programs, duration, mode, certificates, or mentors? 😊"
+    ])
 
 # --- Streamlit UI ---
 st.set_page_config(page_title="Iron Lady Chatbot", page_icon="🤖", layout="centered")
