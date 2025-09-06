@@ -45,22 +45,57 @@ def get_answer(user_input):
 # --- Streamlit UI ---
 st.set_page_config(page_title="Iron Lady Chatbot", page_icon="🤖", layout="centered")
 
+# --- Custom CSS for styling ---
+st.markdown("""
+    <style>
+    body {
+        background: linear-gradient(135deg, #f9c5d1, #9796f0);
+        font-family: 'Trebuchet MS', sans-serif;
+    }
+    .stTextInput>div>div>input {
+        border: 2px solid #FF69B4;
+        border-radius: 10px;
+    }
+    .chat-bubble {
+        padding: 10px 15px;
+        border-radius: 15px;
+        margin: 8px 0;
+        display: inline-block;
+        max-width: 80%;
+    }
+    .user-bubble {
+        background-color: #ffdae0;
+        color: black;
+        text-align: right;
+        float: right;
+        clear: both;
+    }
+    .bot-bubble {
+        background-color: #e3e6ff;
+        color: black;
+        text-align: left;
+        float: left;
+        clear: both;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 st.title("🤖 Iron Lady FAQ Chatbot")
-st.write("Hello! I’m the Iron Lady Assistant. Ask me about our leadership programs ✨")
+st.write("✨ Welcome! I’m the Iron Lady Assistant. Ask me about our leadership programs!")
 
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-user_input = st.text_input("💬 Ask your question:")
+user_input = st.text_input("💬 Type your question:")
 
 if user_input:
     answer = get_answer(user_input)
     st.session_state.chat_history.append(("You", user_input))
     st.session_state.chat_history.append(("Bot", answer))
 
-# Display chat history
+# Display styled chat history
 for sender, msg in st.session_state.chat_history:
     if sender == "You":
-        st.markdown(f"**🧑 {sender}:** {msg}")
+        st.markdown(f"<div class='chat-bubble user-bubble'>🧑 {msg}</div>", unsafe_allow_html=True)
     else:
-        st.markdown(f"**🤖 {sender}:** {msg}")
+        st.markdown(f"<div class='chat-bubble bot-bubble'>🤖 {msg}</div>", unsafe_allow_html=True)
