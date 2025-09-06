@@ -45,41 +45,53 @@ def get_answer(user_input):
 # --- Streamlit UI ---
 st.set_page_config(page_title="Iron Lady Chatbot", page_icon="👩‍💼", layout="centered")
 
-# --- Custom CSS for styling ---
-st.markdown("""
-    <style>
-    body {
-        background: linear-gradient(135deg, #f9c5d1, #9796f0);
-        font-family: 'Trebuchet MS', sans-serif;
-    }
-    .stTextInput>div>div>input {
-        border: 2px solid #FF69B4;
-        border-radius: 10px;
-    }
-    .chat-bubble {
-        padding: 10px 15px;
-        border-radius: 15px;
-        margin: 8px 0;
-        display: inline-block;
-        max-width: 80%;
-        font-size: 16px;
-    }
-    .user-bubble {
-        background-color: #ffdae0;
-        color: black;
-        text-align: right;
-        float: right;
-        clear: both;
-    }
-    .bot-bubble {
-        background-color: #e3e6ff;
-        color: black;
-        text-align: left;
-        float: left;
-        clear: both;
-    }
-    </style>
-""", unsafe_allow_html=True)
+# --- Sidebar Theme Selector ---
+st.sidebar.title("🎨 Customize Theme")
+theme = st.sidebar.radio(
+    "Choose a theme:",
+    ["Elegant Gradient", "Professional Dark Mode", "Iron Lady Brand Colors"]
+)
+
+# --- Apply Theme ---
+if theme == "Elegant Gradient":
+    st.markdown(
+        """
+        <style>
+        .stApp { background: linear-gradient(135deg, #f9c5d1, #9796f0); font-family: 'Trebuchet MS', sans-serif; }
+        .stTextInput>div>div>input { border: 2px solid #FF69B4; border-radius: 10px; }
+        .chat-bubble { padding: 10px 15px; border-radius: 15px; margin: 8px 0; display: inline-block; max-width: 80%; font-size: 16px; }
+        .user-bubble { background-color: #ffdae0; color: black; text-align: right; float: right; clear: both; }
+        .bot-bubble { background-color: #e3e6ff; color: black; text-align: left; float: left; clear: both; }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+elif theme == "Professional Dark Mode":
+    st.markdown(
+        """
+        <style>
+        .stApp { background: #1e1e1e; color: #f5f5f5; font-family: 'Trebuchet MS', sans-serif; }
+        .stTextInput>div>div>input { border: 2px solid #888; border-radius: 10px; background: #333; color: #fff; }
+        .chat-bubble { padding: 10px 15px; border-radius: 15px; margin: 8px 0; display: inline-block; max-width: 80%; font-size: 16px; }
+        .user-bubble { background-color: #444; color: white; text-align: right; float: right; clear: both; }
+        .bot-bubble { background-color: #666; color: white; text-align: left; float: left; clear: both; }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+else:  # Iron Lady Brand Colors
+    st.markdown(
+        """
+        <style>
+        .stApp { background: #fff0f5; color: #d63384; font-family: 'Trebuchet MS', sans-serif; }
+        .stTextInput>div>div>input { border: 2px solid #d63384; border-radius: 10px; }
+        .chat-bubble { padding: 10px 15px; border-radius: 15px; margin: 8px 0; display: inline-block; max-width: 80%; font-size: 16px; }
+        .user-bubble { background-color: #ffd6e8; color: black; text-align: right; float: right; clear: both; }
+        .bot-bubble { background-color: #ffe6f2; color: black; text-align: left; float: left; clear: both; }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
 # --- Header with branding ---
 st.image("https://ironlady.in/wp-content/uploads/2022/03/logo.png", width=180)  # Iron Lady Logo
@@ -102,6 +114,7 @@ if user_input:
 if st.button("🗑️ Clear Chat"):
     st.session_state.chat_history = []
     st.success("Chat cleared!")
+    st.experimental_rerun()
 
 # --- Display styled chat history ---
 for sender, msg in st.session_state.chat_history:
