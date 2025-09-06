@@ -94,7 +94,6 @@ else:  # Iron Lady Brand Colors
     )
 
 # --- Header with branding ---
-st.image("https://ironlady.in/wp-content/uploads/2022/03/logo.png", width=180)  # Iron Lady Logo
 st.title("👩‍💼 Iron Lady FAQ Chatbot")
 st.write("✨ Welcome! I’m the Iron Lady Assistant. Ask me about our leadership programs!")
 
